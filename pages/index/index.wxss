@@ -1,0 +1,32 @@
+/**index.wxss**/
+page, .page-body, .page-section {
+  height: 100%;
+}
+.mapstyle {
+
+  height: 100%;
+  width: 750rpx;
+}
+.page-section-gap{
+  box-sizing: border-box;
+}
+
+.page-body-button {
+  width: 600rpx;
+  right: 10rpx;
+  bottom: 10rpx;
+  position: fixed;
+  margin-bottom: 30rpx;
+}
+
+.page-body-button1 {
+  bottom: 100rpx;
+}
+
+.page-body-button2 {
+  bottom: 200rpx;
+}
+
+.page-body-button3 {
+  bottom: 300rpx;
+}
