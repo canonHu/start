@@ -51,34 +51,34 @@ export default class extends wepy.app {
   }
 
   getLocation () {
-    wx.getSetting({
-      success: res => {
-        if (!res.authSetting['scope.userLocation']) {
-          wx.authorize({
-            scope: 'scope.userLocation',
-            success () {
-              // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
-            }
-          })
-        }
+    // wx.getSetting({
+    //   success: res => {
+    //     if (!res.authSetting['scope.userLocation']) {
+    //       wx.authorize({
+    //         scope: 'scope.userLocation',
+    //         success () {
+    //           // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+    //         }
+    //       })
+    //     }
 
-        if (!res.authSetting['scope.userInfo']) {
-          wx.authorize({
-            scope: 'scope.userInfo',
-            success: () => {
-              if (!this.globalData.userInfo) {
-                wx.getUserInfo({
-                  success: res => {
-                    this.globalData.userInfo = res.userInfo
-                  }
-                })
-              }
-              // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
-            }
-          })
-        }
-      }
-    })
+    //     if (!res.authSetting['scope.userInfo']) {
+    //       wx.authorize({
+    //         scope: 'scope.userInfo',
+    //         success: () => {
+    //           if (!this.globalData.userInfo) {
+    //             // wx.getUserInfo({
+    //             //   success: res => {
+    //             //     this.globalData.userInfo = res.userInfo
+    //             //   }
+    //             // })
+    //           }
+    //           // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+    //         }
+    //       })
+    //     }
+    //   }
+    // })
   }
 }
 </script>
