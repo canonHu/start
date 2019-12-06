@@ -38,8 +38,27 @@
     &__scan1 {
       left: 40%;
     }
+
+    &__tel {
+      right: 20rpx;
+      width: 100rpx;
+      height: 100rpx;
+      bottom: 100rpx;
+      position: fixed;
+      margin-bottom: 30rpx;
+    }
+  }
+
+  button {
+    box-sizing: content-box;
+    background-color: #ffffff;
+  }
+
+  button::after {
+    border: none;
   }
 </style>
+
 <template>
   <view class="page">
     <view class="page-section">
@@ -52,28 +71,32 @@
         markers="{{ markers }}"
         show-location
       >
-        <cover-image
+        <!-- 头部 -->
+        <head :userInfo.sync="userInfo" />
+        
+        <image
           @tap="moveToLocation"
           class="page-section__addr"
           src="../images/youAddress.jpeg"
         />
-        <cover-image
+        <image
           class="page-section__icon"
           src="../images/location.png"
         />
-        <cover-image
+        <image
           @tap="scan"
           src="../images/scan.jpeg"
           class="page-section__scan"
         />
-        <cover-image
+        <image
           @tap="scan"
           src="../images/scan.jpeg"
           class="page-section__scan page-section__scan1"
         />
-        <cover-view
-          class=""
-        >服</cover-view>
+        <view
+          @tap="tel"
+          class="page-section__tel"
+        >联系客服</view>
       </map>
     </view>
     <view class="btn-area">
@@ -83,15 +106,20 @@
 
 <script>
   import wepy from 'wepy'
+  import head from '../components/Head'
 
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: 'test'
     }
 
+    components = {
+      head
+    }
+
     data = {
+      userInfo: {}, // 用户信息
       youAddree: '../images/youAddress.jpeg',
-      userInfo: null,
       latitude: 23.099994,
       longitude: 113.324520,
       markers: [
@@ -105,7 +133,7 @@
             content: '大途牛',
             display: 'ALWAYS'
           },
-          iconPath: "../images/location.png"
+          iconPath: '../images/location.png'
         },
         {
           id: 2,
@@ -114,7 +142,7 @@
           callout: {
             content: '大途牛',
             display: 'ALWAYS'
-          },
+          }
         },
         {
           id: 3,
@@ -123,7 +151,7 @@
           callout: {
             content: '大途牛',
             display: 'ALWAYS'
-          },
+          }
         },
         {
           id: 4,
@@ -132,7 +160,7 @@
           callout: {
             content: '大途牛',
             display: 'ALWAYS'
-          },
+          }
         }
       ]
     }
@@ -146,6 +174,13 @@
     }
 
     methods = {
+      // 打电话
+      tel () {
+        wx.makePhoneCall({
+          phoneNumber: '13030303030'
+        })
+      },
+
       moveToLocation () {
         this.moveToLocationFnuc()
       },
@@ -166,8 +201,8 @@
           autoRotate: true,
           duration: 1000,
           destination: {
-            latitude:23.10229,
-            longitude:113.3345211,
+            latitude: 23.10229,
+            longitude: 113.3345211
           }
         })
       }
@@ -188,6 +223,7 @@
     }
 
     onLoad() {
+      this.userInfo = wx.getStorageSync('USER_INFO') || {}
       // this.getUserInfo()
       this.getLocationInfo()
     }

@@ -1,0 +1,98 @@
+<style lang="less" scoped>
+  .head {
+    width: 750rpx;
+    display: flex;
+    height: 70rpx;
+    padding: 20rpx 0;
+    align-items: center;
+    background-color: #ffffff;
+    box-shadow: 0 0 10rpx #000000;
+
+    &-img {
+      height: 70rpx;
+      display: flex;
+      padding: 0 20rpx;
+
+      &__src {
+        width: 70rpx;
+        height: 70rpx;
+        border-radius: 35rpx;
+      }
+    }
+
+    &-search {
+      width: 500rpx;
+      height: 70rpx;
+      padding: 0 20rpx;
+      font-size: 24rpx;
+      line-height: 70rpx;
+      border-left: 1rpx solid #333333;
+    }
+
+    &-more {
+      width: 100rpx;
+      height: 70rpx;
+      text-align: center;
+      line-height: 70rpx;
+      border-left: 1rpx solid #333333;
+    }
+  }
+</style>
+
+<template>
+  <view class="head" >
+    <!-- 头像 -->
+    <view wx:if="{{ userInfo.avatarUrl }}" class="head-img">
+      <image
+        class="head-img__src"
+        src="{{ userInfo.avatarUrl }}"
+      />
+    </view>
+
+    <button
+      wx:else
+      class="head-img"
+      open-type="getUserInfo"
+      @getuserinfo="getUserInfo"
+    >
+      <image
+        class="head-img__src"
+        src="{{ userInfo.avatarUrl || '../images/scan.jpeg'}}"
+      />
+    </button>
+
+    <!-- 搜索框 -->
+    <view
+      @tap="choice"
+      class="head-search"
+    >搜索位置查找附近街电</view>
+
+    <!-- 更多 -->
+    <view class="head-more">多</view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class Head extends wepy.component {
+    props = {
+      userInfo: {
+        default: {},
+        type: Object,
+        twoWay: true
+      }
+    }
+
+    methods = {
+      choice () {
+        wx.chooseLocation()
+      },
+
+      getUserInfo (e) {
+        this.userInfo = e.detail.userInfo
+        wx.setStorageSync('USER_INFO', e.detail.userInfo)
+      }
+    }
+  }
+</script>
